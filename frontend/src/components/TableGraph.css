@@ -1,0 +1,13 @@
+.table-object:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  transition: all 0.2s ease;
+}
+
+.attribute-row:hover {
+  background-color: #f1f5f9 !important;
+}
+
+.attribute-tooltip-trigger:hover .attribute-tooltip {
+  display: block !important;
+}

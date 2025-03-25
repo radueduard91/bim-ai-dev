@@ -1,0 +1,14 @@
+backend
+cd "C:\Users\R40008\Asset Model Server\python\bim-ai-poc"
+venv\Scripts\activate
+uvicorn backend.app.main:app --reload
+
+
+frontend
+cd "C:\Users\R40008\Asset Model Server\python\bim-ai-poc\frontend"
+npm start
+
+
+
+debug
+http://127.0.0.1:8000/docs
