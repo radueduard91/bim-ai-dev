@@ -1,5 +1,13 @@
 fastapi
 uvicorn
-neo4j
 pandas
+python-multipart
+pydantic
+starlette
+openpyxl
+requests
+aiofiles
 python-dotenv
+httpx
+colorama
+typing-extensions
