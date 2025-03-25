@@ -1,11 +1,11 @@
 backend
-cd "C:\Users\R40008\Asset Model Server\python\bim-ai-poc"
+cd "project dir"
 venv\Scripts\activate
 uvicorn backend.app.main:app --reload
 
 
 frontend
-cd "C:\Users\R40008\Asset Model Server\python\bim-ai-poc\frontend"
+cd "project dir"
 npm start
 
 
