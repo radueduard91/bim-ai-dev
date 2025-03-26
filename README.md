@@ -1,5 +1,7 @@
 # BIM AI POC (Business Information Modeling AI Proof of Concept)
 
+[![AI-Powered Data Modeling: A Revolutionary Proof of Concept Demo](https://img.youtube.com/vi/j3ttF0hD9v4/0.jpg)](https://www.youtube.com/watch?v=j3ttF0hD9v4 "AI-Powered Data Modeling: A Revolutionary Proof of Concept Demo")
+
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React](https://img.shields.io/badge/React-18.x-61DAFB.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.95.x-009688.svg)
