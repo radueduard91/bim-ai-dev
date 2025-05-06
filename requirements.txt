@@ -4,3 +4,8 @@ neo4j
 pandas
 python-dotenv
 python-multipart
+pytest
+pytest-cov
+pytest-mock
+pytest-asyncio
+httpx

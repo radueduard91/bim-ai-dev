@@ -1,4 +1,18 @@
 {
-    "python.pythonPath": ".\\venv\\Scripts\\python.exe"
-
+    "python.pythonPath": ".\\venv\\Scripts\\python.exe",
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestArgs": [
+        "backend/tests"
+  ],
+    "eslint.workingDirectories": [
+        "./frontend"
+  ],
+    "jest.pathToJest": "frontend/node_modules/.bin/jest",
+    "jest.rootPath": "frontend",
+    "jest.autoRun": {
+    "watch": false,
+    "onSave": "test-file"
+  }
 }

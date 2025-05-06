@@ -1,12 +1,13 @@
 backend
-cd "project dir"
-venv\Scripts\activate
+cd C:\Users\R40008\Asset Model Server\python\bim-ai-dev
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+.\venv\Scripts\Activate.ps1
 uvicorn backend.app.main:app --reload
 
 
 frontend
-cd "project dir"
-npm start
+cd "C:\Users\R40008\Asset Model Server\python\bim-ai-dev\frontend"  
+cmd /c "npm start"
 
 
 

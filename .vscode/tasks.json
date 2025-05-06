@@ -1,0 +1,80 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Run Backend Tests",
+        "type": "shell",
+        "command": "cd backend && python -m pytest",
+        "group": {
+          "kind": "test",
+          "isDefault": true
+        },
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Run Backend Tests with Coverage",
+        "type": "shell",
+        "command": "cd backend && python -m pytest --cov=app --cov-report=html",
+        "group": "test",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Run Frontend Tests",
+        "type": "shell",
+        "command": "cd frontend && npm test",
+        "group": "test",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Run Frontend Tests with Coverage",
+        "type": "shell",
+        "command": "cd frontend && npm test -- --coverage",
+        "group": "test",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Run Frontend E2E Tests",
+        "type": "shell",
+        "command": "cd frontend && npx cypress run",
+        "group": "test",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Run All Tests",
+        "dependsOrder": "sequence",
+        "dependsOn": [
+          "Run Backend Tests",
+          "Run Frontend Tests"
+        ],
+        "group": {
+          "kind": "test",
+          "isDefault": true
+        },
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
