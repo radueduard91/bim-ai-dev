@@ -16,6 +16,8 @@ def test_upload_endpoint(client, test_csv_file):
 
 def test_graph_data_endpoint_no_data(client):
     """Test the graph data endpoint when no data is available."""
+    # The client fixture now resets data_store before each test
+    # so we don't need to manually reset it here
     response = client.get("/graph-data/")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert "detail" in response.json()

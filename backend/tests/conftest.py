@@ -6,13 +6,22 @@ from fastapi.testclient import TestClient
 # Add the parent directory to sys.path to allow importing app modules
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from app.main import app  # Import the FastAPI app
+from app.main import app, data_store  # Import the FastAPI app and data_store
 
 @pytest.fixture
 def client():
     """
     TestClient instance with overridden dependencies for testing.
     """
+    # Reset data_store to initial state before each test
+    data_store.clear()
+    data_store.update({
+        "df": None, 
+        "nodeDataArray": [], 
+        "linkDataArray": [], 
+        "loadDescriptions": False
+    })
+    
     with TestClient(app) as test_client:
         yield test_client
 

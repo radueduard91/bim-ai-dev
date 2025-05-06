@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, status
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
@@ -58,7 +58,7 @@ async def download_template():
         if os.path.exists("ai template.xlsx"):
             template_path = "ai template.xlsx"
         else:
-            raise HTTPException(status_code=404, detail="Template file not found")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Template file not found")
     
     return FileResponse(
         path=template_path,
@@ -110,7 +110,7 @@ async def upload_file(file: UploadFile = File(...)):
         if not all(col in df.columns for col in required_columns):
             logger.error("Missing required columns in CSV file")
             return JSONResponse(
-                status_code=400,
+                status_code=status.HTTP_400_BAD_REQUEST,
                 content={"detail": "Missing required columns in CSV file"}
             )
 
@@ -127,16 +127,10 @@ async def upload_file(file: UploadFile = File(...)):
         return {"message": "File uploaded successfully"}
     except Exception as e:
         logger.error(f"Error processing file: {str(e)}")
-        if "Missing required columns" in str(e):
-            return JSONResponse(
-                status_code=400,
-                content={"detail": f"Error processing the file: {str(e)}"}
-            )
-        else:
-            return JSONResponse(
-                status_code=500,
-                content={"message": f"Error processing the file: {str(e)}"}
-            )
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST if "Missing required columns" in str(e) else status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": f"Error processing the file: {str(e)}"}
+        )
 
 
 @app.get("/graph-data/")
@@ -147,7 +141,8 @@ def get_graph_data():
     if data_store["df"] is None:
         logger.warning("No data available in data_store")
         raise HTTPException(
-            status_code=400, detail="No data available. Please upload a file first."
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="No data available. Please upload a file first."
         )
 
     if data_store["nodeDataArray"] and not data_store.get("loadDescriptions", False):
@@ -270,7 +265,8 @@ async def load_descriptions():
     """
     if data_store["df"] is None:
         raise HTTPException(
-            status_code=400, detail="No data available. Please upload a file first."
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No data available. Please upload a file first."
         )
 
     # Set flag to load descriptions
@@ -294,7 +290,7 @@ async def apply_drag_drop(data: dict):
     target_type = data.get("targetType")
     
     if not source_key or not target_key:
-       raise HTTPException(status_code=400, detail="Invalid source or target key.")
+       raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid source or target key.")
 
     # Get all the links
     links = data_store["linkDataArray"]
@@ -312,7 +308,7 @@ async def apply_drag_drop(data: dict):
     elif source_type == "object" and target_type == "system":
         data_store["linkDataArray"].append({"from": target_key, "to": source_key})
     else:
-        raise HTTPException(status_code=400, detail="Invalid drag-and-drop operation.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid drag-and-drop operation.")
 
 
     return {"message": "Drag-and-drop operation completed successfully"}
@@ -325,7 +321,8 @@ def get_graph_summary():
     """
     if not data_store["nodeDataArray"] or not data_store["linkDataArray"]:
         raise HTTPException(
-            status_code=400, detail="No graph data available. Please upload a file first."
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No graph data available. Please upload a file first."
         )
 
     return {
