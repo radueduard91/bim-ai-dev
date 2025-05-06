@@ -4,12 +4,18 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 .\venv\Scripts\Activate.ps1
 uvicorn backend.app.main:app --reload
 
+Test backend
+python -m pytest
 
 frontend
 cd "C:\Users\R40008\Asset Model Server\python\bim-ai-dev\frontend"  
 cmd /c "npm start"
 
+Test frontend
 
 
 debug
 http://127.0.0.1:8000/docs
+
+
+
