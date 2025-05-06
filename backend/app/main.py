@@ -108,8 +108,10 @@ async def upload_file(file: UploadFile = File(...)):
             "attribute_definition",
         ]
         if not all(col in df.columns for col in required_columns):
-            raise HTTPException(
-                status_code=400, detail="Missing required columns in CSV file"
+            logger.error("Missing required columns in CSV file")
+            return JSONResponse(
+                status_code=400,
+                content={"detail": "Missing required columns in CSV file"}
             )
 
         # Store the validated DataFrame in memory
@@ -125,9 +127,16 @@ async def upload_file(file: UploadFile = File(...)):
         return {"message": "File uploaded successfully"}
     except Exception as e:
         logger.error(f"Error processing file: {str(e)}")
-        return JSONResponse(
-            status_code=500, content={"message": f"Error processing the file: {str(e)}"}
-        )
+        if "Missing required columns" in str(e):
+            return JSONResponse(
+                status_code=400,
+                content={"detail": f"Error processing the file: {str(e)}"}
+            )
+        else:
+            return JSONResponse(
+                status_code=500,
+                content={"message": f"Error processing the file: {str(e)}"}
+            )
 
 
 @app.get("/graph-data/")
@@ -136,6 +145,7 @@ def get_graph_data():
     Generate graph data from the uploaded CSV file.
     """
     if data_store["df"] is None:
+        logger.warning("No data available in data_store")
         raise HTTPException(
             status_code=400, detail="No data available. Please upload a file first."
         )
